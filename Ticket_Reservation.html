@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<body onload="myFunction()">
+<h1>Ticket Services</h1>
+<h2>Purchase tickets below</h2>
+
+<p>Select the ticket</p>
+<div class="container">
+ <div class="row">
+        <span>
+          <input type="checkbox" id="adult_check">
+        </span>
+        <span>
+          <label for="tbox">Adults</label>
+        </span>
+		<span>
+        <input type="number" id="adult_num"   min="1" max="20" disabled> 
+		</span>
+		<span>
+			<input type="number" id="adult_cost"   min="1" max="20" disabled> 
+		</span>
+</div>
+<br>
+<div class="row">
+        <span>
+          <input type="checkbox" id="child_check" >
+        </span>
+        <span>
+          <label for="tbox">Child</label>
+        </span>
+		 <span>
+        <input type="number" id="child_num" min="1" max="19" disabled > 
+		</span>
+		<span>
+			<input type="number" id="child_cost"   min="1" max="20" disabled> 
+		</span>
+</div>
+<br>
+<div class="row">
+        <span>
+          <input type="checkbox" id = "infant_check">
+        </span>
+        <span>
+          <label for="tbox">Infant</label>
+        </span>
+		<span>
+        <input type="number" id="infant_num" min="1" max="20" disabled> 
+		</span>
+		<span>
+			<input type="number" id="infant_cost"   min="1" max="20" value = "0" disabled> 
+		</span>
+</div>
+<br>
+<br>
+<div class ="row">
+        <span>
+          <label for="tbox">Total Cost</label>
+        </span>
+<span>
+	<input type="number" id="total_cost"   value = "0" disabled> 
+</span>
+        <span>
+          <label for="tbox">Number of Seats</label>
+        </span>
+<span>
+	<input type="number" id="total_seat"   min="1" max="20" value = "0" disabled> 
+</span>
+</div>
+<br>
+<br>
+<br>
+<div class ="row">
+	<button type="button" id="infant_cost" onclick="alert('Hello world!')">Make Payment</button>
+</div>
+</div>
+<script>
+
+function myFunction() {
+	document.getElementById('infant_num').onblur = function() {
+	if (document.getElementById('infant_num').value > document.getElementById('adult_num').value)
+	 {	
+		 alert("Infants cannot be more than the Adults");
+		 document.getElementById('infant_num').value = 0;
+	 }
+	}
+	document.getElementById('child_check').onchange = function() {
+	if (document.getElementById('adult_cost').value < 10)
+	 {
+		alert("Cannot Select child without an Adult");
+		 window.location.reload();
+	 }
+	 if ( document.getElementById('child_num').disabled == true)
+	 {	
+		document.getElementById('child_cost').value = 0;
+	 }
+	 
+    document.getElementById('child_num').disabled = !this.checked;
+	document.getElementById('child_num').value = 0;}
+	
+	document.getElementById('adult_check').onchange = function() {
+    document.getElementById('adult_num').disabled = !this.checked;
+	document.getElementById('adult_num').value = 0;
+
+	 if ( document.getElementById('adult_num').disabled == true)
+	 {	
+		document.getElementById('adult_cost').value = 0;
+		document.getElementById('total_cost').value = 0;
+		document.getElementById('total_seat').value = 0;
+		document.getElementById('child_check').disabled = !this.checked;
+		document.getElementById('infant_check').disabled  = !this.checked;
+	 }}
+	
+	document.getElementById('infant_check').onchange = function() {
+	if (document.getElementById('adult_cost').value < 20)
+	 {
+		alert("Cannot Select Infant without an Adult");
+		 window.location.reload();
+	 }
+    document.getElementById('infant_num').disabled = !this.checked;
+	document.getElementById('infant_num').value = 0;}
+	
+	document.getElementById('adult_num').onchange = function() {
+	if (document.getElementById('adult_num').value == 20)
+	 {	
+	 document.getElementById('child_check').disabled = true;
+	 document.getElementById('child_num').value = 0;
+	 document.getElementById('child_cost').value = 0;
+	 }
+	 else
+	 {
+	 document.getElementById('child_check').disabled = false;
+	 }
+	 
+	}
+	document.getElementById('adult_num').onblur = function() {
+	if (parseInt(document.getElementById('adult_num').value) + parseInt(document.getElementById('child_num').value) > 20)
+		 {	alert (document.getElementById('adult_num').value);
+		alert (document.getElementById('child_num').value);
+alert("Cannot Select more than 20 tickets");
+window.location.reload();
+
+}
+	if (document.getElementById('adult_num').value > 0)
+	 {	
+		document.getElementById('adult_cost').value = document.getElementById('adult_num').value * 20;
+		document.getElementById('total_cost').value = parseInt(document.getElementById('total_cost').value) + parseInt(document.getElementById('adult_cost').value);
+		document.getElementById('total_seat').value = parseInt(document.getElementById('total_seat').value) + parseInt(document.getElementById('adult_num').value);
+	 }
+	 if (document.getElementById('adult_num').value == 0)
+	 {	
+		document.getElementById('adult_cost').value = 0;
+		document.getElementById('total_cost').value = 0;
+	 }
+	}
+	
+		document.getElementById('child_num').onblur = function() {
+		alert (document.getElementById('adult_num').value);
+		alert (document.getElementById('child_num').value);
+		if (parseInt(document.getElementById('adult_num').value) + parseInt(document.getElementById('child_num').value) > 20)
+		 {
+alert("Cannot Select more than 20 tickets");
+document.getElementById('child_check').checked = false;
+document.getElementById('child_num').value = 0;
+ document.getElementById('child_num').disabled = true;
+
+		 }
+	if ((document.getElementById('child_num').value > 0))
+	 {	
+		document.getElementById('child_cost').value = document.getElementById('child_num').value * 10;
+		document.getElementById('total_cost').value = parseInt(document.getElementById('total_cost').value) + parseInt(document.getElementById('child_cost').value);
+		document.getElementById('total_seat').value = parseInt(document.getElementById('total_seat').value) + parseInt(document.getElementById('child_num').value);
+	 }
+	 	 if (document.getElementById('child_num').value == 0)
+	 {	
+		document.getElementById('child_cost').value = 0;
+		document.getElementById('total_cost').value = parseInt(document.getElementById('total_cost').value) - parseInt(document.getElementById('child_cost').value);
+		document.getElementById('total_seat').value = parseInt(document.getElementById('total_seat').value) - parseInt(document.getElementById('child_num').value);
+	 }
+	
+	}
+	
+
+}
+
+</script>
+
+</body>
+</html>
